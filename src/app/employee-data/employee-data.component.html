@@ -1,0 +1,102 @@
+<!-- Newer, fancier form -->
+<md-card>
+	<md-card-header>
+		<md-card-title><div class="card-title" [ngSwitch]="isNewEmployee()">
+			<p *ngSwitchCase="true">Create Employee</p>
+			<p *ngSwitchCase="false">Edit Employee</p>
+		</div></md-card-title>
+	</md-card-header>
+	<md-card-content>
+		<form novalidate [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+			<div class="card-row" >
+				<label class="card-label" for="name">
+					<md-icon> person </md-icon>
+				</label>
+				<div class="name-row">				
+					<md-input-container class="name-row-first">
+					  <input mdInput id="first" name="first" placeholder="First"
+					  	formControlName="first">
+					  <md-hint *ngIf="!employeeForm.controls['first'].pristine 
+					  	&& !employeeForm.controls['first'].valid"  
+					    [ngStyle]="{'color': 'red'}" align="start">Invalid Name</md-hint>
+					</md-input-container>
+					<md-input-container class="name-row-middle">
+					  <input mdInput id="middle" name="middle" placeholder="Middle"
+					  	formControlName="middle">
+					</md-input-container>
+					<md-input-container class="name-row-last">
+					  <input mdInput id="last" name="last" placeholder="Last"
+					  	formControlName="last">
+					  <md-hint *ngIf="!employeeForm.controls['last'].pristine 
+					  	&& !employeeForm.controls['last'].valid"  
+					    [ngStyle]="{'color': 'red'}" align="start">Invalid Name</md-hint>
+					</md-input-container>
+				</div>
+            </div>
+            <div class="card-row">
+            	<label class="card-label" for="email">
+            		<md-icon> email </md-icon>
+        		</label>
+	           	<md-input-container class="input-full-width">
+	            	<input mdInput id="email" name="email" type="email" placeholder="Email"
+	            		formControlName="email"
+	            		ngModel pattern="[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*"
+	            		>
+	            	<md-hint *ngIf="!employeeForm.get('email').pristine 
+					  	&& employeeForm.get('email').hasError('pattern')"  
+					    [ngStyle]="{'color': 'red'}" align="start">Please enter a valid Email</md-hint>
+	           	</md-input-container>
+           	</div>
+           	<div class="card-row">
+           		<label class="card-label" for="phone">
+            		<md-icon> call </md-icon>
+        		</label>
+	    		<md-input-container class="input-full-width">
+	              <input mdInput id="phone" name="phone" placeholder="Phone"
+	              	formControlName="phone">
+	              <md-hint *ngIf="!employeeForm.get('phone').pristine 
+					  	&& employeeForm.get('phone').hasError('required')"  
+					    [ngStyle]="{'color': 'red'}" align="start">Phone is required</md-hint>
+	           </md-input-container>
+           </div>
+           <div class="card-actions">
+           		<button md-button *ngIf="loading">
+				  <md-spinner></md-spinner>
+				</button>
+				<a md-raised-button color="warn" *ngIf="!isNewEmployee()" (click)="formDelete()">Delete</a>
+
+				<a md-button (click)="formReset()">Cancel</a>
+				<a md-button type="submit" [disabled]="employeeForm.invalid" (click)="onSubmit()">Save</a>
+    		</div>
+        </form>
+	</md-card-content>
+	<!--<pre>{{ data | json }}</pre>-->
+</md-card>
+
+<md-card>
+	<md-card-content>
+		<div layout="row" style="display: flex;" layout-align="start center" class="pad-left-sm pad-right-sm">
+			<h2>Employees</h2>
+		</div>
+		<md-divider></md-divider>
+		<td-data-table
+		  [data]="filteredData"
+		  [columns]="columns"
+		  [selectable]="selectable"
+		  [multiple]="multiple"
+		  [sortable]="true"
+		  [sortBy]="sortBy"
+		  [(ngModel)]="selectedRows"
+		  [sortOrder]="sortOrder"
+		  (sortChange)="sort($event)"
+		  (rowSelect)="selectEvent($event)">
+		</td-data-table>
+	</md-card-content>
+	<!-- This padding is for the pagination footer -->
+	<md-card-actions style="padding-bottom: 36px;">
+		<td-paging-bar #pagingBar [pageSizes]="[5, 10, 15, 20]" [total]="filteredTotal" (change)="page($event)">
+		  <span td-paging-bar-label hide-xs>Row per page:</span>
+		  {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+		</td-paging-bar>
+	</md-card-actions>
+</md-card>

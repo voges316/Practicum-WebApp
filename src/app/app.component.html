@@ -1,3 +1,69 @@
-<h1>
-  {{title}}
-</h1>
+<!-- FYI may want to keep this layout handy. Other layout breaks everything but chrome
+
+<md-toolbar color="primary">
+
+	<a md-button [routerLink]="['home']">
+		<md-icon> home </md-icon>
+	</a>
+	<a md-button [routerLink]="['employees']">
+		<md-icon> group </md-icon>
+	</a>
+	<a md-button [routerLink]="['jobs']">
+		<md-icon> work </md-icon>
+	</a>
+	-->
+	<!-- Dropdown menu. Unused right now
+	<button md-button [mdMenuTriggerFor]="mainMenu">
+		<md-icon> menu </md-icon>
+	</button>
+	<md-menu #mainMenu="mdMenu">
+	  <button md-menu-item> Settings </button>
+	  <button md-menu-item> Help </button>
+	</md-menu>
+	-->
+
+	<!-- This fills the remaining space of the current row
+	<span class="toolbar-spacer"></span>
+	<a md-button href="https://material.io/">
+		Design by Material <md-icon>info</md-icon>
+	</a>
+</md-toolbar>
+
+<router-outlet></router-outlet>
+-->
+
+<td-layout-nav-list #navList 
+	logo="" 
+	toolbarTitle="Menu"
+	[opened]="media.registerQuery('gt-sm') | async"
+    [mode]="(media.registerQuery('gt-sm') | async) ? 'side' : 'over'"
+    [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '350px' : '100%'"
+    >
+  <md-nav-list td-sidenav-content (click)="!media.query('gt-sm') && navList.close()">
+    <a md-list-item [routerLink]="['/home']">
+      <md-icon md-list-avatar> home </md-icon>
+      <h3 md-line> Home </h3>
+      <p md-line> Home Page </p>
+    </a>
+    <md-divider md-inset></md-divider>
+    <a md-list-item [routerLink]="['/employees']">
+      <md-icon md-list-avatar> group </md-icon>
+      <h3 md-line> Employees </h3>
+      <p md-line> View Employees </p>
+    </a>
+    <md-divider md-inset></md-divider>
+    <a md-list-item [routerLink]="['/jobs']">
+      <md-icon md-list-avatar>view_quilt</md-icon>
+      <h3 md-line> Jobs </h3>
+      <p md-line> View Jobs </p>
+    </a>
+  </md-nav-list>
+
+  <div td-toolbar-content layout="row" flex>
+    <span>Airlink</span>
+    <span flex></span>
+  </div>
+
+  <router-outlet></router-outlet>
+
+</td-layout-nav-list>

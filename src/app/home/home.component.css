@@ -1,0 +1,18 @@
+.margin {
+	display: flex;
+	justify-content: center;
+	margin-top: 8px;
+}
+
+.content {
+	flex: 0 1 100%;
+}
+
+.arlnk-icon {
+	order: -1;
+	padding: 20px;
+}
+
+.arlnk-title {
+	
+}

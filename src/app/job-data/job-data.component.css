@@ -1,0 +1,29 @@
+.card-title {
+	font-size: 20px;
+}
+
+.card-row {
+	display: flex;
+}
+
+.card-label {
+	margin-top: 10px;
+	opacity: .6;
+	width: 60px;
+}
+
+.input-full-width {
+	width: 100%;
+}
+
+.card-actions {
+	display: flex;
+	justify-content: flex-end;
+}
+
+md-spinner {
+  float:right; 
+  width: 24px; 
+  height: 24px; 
+  margin: 5px 10px 0px 0px;
+}
