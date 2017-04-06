@@ -1,4 +1,10 @@
-
 .toolbar-spacer {
   flex: 1 1 auto;
 }
+
+/* Removes uneeded border from center content */
+.mat-card {
+	margin: 20px;
+	padding: 0px;
+}
+

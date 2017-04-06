@@ -1,2 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/core/theming/prebuilt/indigo-pink.css';
+
+/* Placed here to color background of md-cards */
+.mat-sidenav-container {
+	background-color: #e0e0e0;
+}
+
+/* Next 3 control content, toolbar, and scrollable region
+   to make a stick toolbar */
+div[layout=column][class=md-content] {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	height: 100vh;
+}
+
+md-toolbar[layout=column][class=md-content] {
+	flex: 0 0 auto;
+}
+
+div[class=md-content][flex] {
+	flex: 1 1 auto;
+	overflow-y: auto;
+}

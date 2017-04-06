@@ -59,11 +59,12 @@
     </a>
   </md-nav-list>
 
-  <div td-toolbar-content layout="row" flex>
+  <div td-toolbar-content layout="row" layout-align="center center" flex>
     <span>Airlink</span>
     <span flex></span>
   </div>
 
-  <router-outlet></router-outlet>
-
+  <md-card>
+  	<router-outlet></router-outlet>
+  </md-card>
 </td-layout-nav-list>
