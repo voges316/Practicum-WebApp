@@ -10,7 +10,8 @@ import {
   ITdDataTableSortChangeEvent,
   ITdDataTableSelectEvent,
   ITdDataTableColumn, 
-  IPageChangeEvent 
+  IPageChangeEvent,
+  CovalentSearchModule
 } from '@covalent/core';
 
 import {

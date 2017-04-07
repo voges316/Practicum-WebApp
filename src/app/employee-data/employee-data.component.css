@@ -45,3 +45,15 @@ md-spinner {
   height: 24px; 
   margin: 5px 10px 0px 0px;
 }
+
+.title-row {
+	display: flex; 
+	justify-content: space-between; 
+	flex-direction: row; 
+	width: 100%;
+}
+
+.title-icon {
+	margin: 10px; 
+	opacity: .6;
+}

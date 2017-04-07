@@ -10,7 +10,8 @@ import {
   ITdDataTableSortChangeEvent,
   ITdDataTableSelectEvent,
   ITdDataTableColumn, 
-  IPageChangeEvent 
+  IPageChangeEvent,
+  CovalentSearchModule 
 } from '@covalent/core';
 import {
 	FormBuilder,
@@ -219,7 +220,7 @@ export class JobDataComponent implements OnInit {
     //{ name: 'id', label: 'ID #', numeric: true, format: NUMBER_FORMAT },
     { name: 'id', label: 'ID #' },
     { name: 'name', label: 'Job' },
-    { name: 'description', label: 'Descr' },
+    { name: 'description', label: 'Description' },
     { name: 'numberNeeded', label: '# Needed', numeric: true, format: NUMBER_FORMAT }
   ];  
 

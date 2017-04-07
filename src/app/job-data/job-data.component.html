@@ -1,11 +1,17 @@
 <md-card>
 	<md-card-header>
-		<md-card-title>
-			<div class="card-title" [ngSwitch]="isNewJob()">
-				<p *ngSwitchCase="true">Create Job</p>
-				<p *ngSwitchCase="false">Edit Job</p>
-			</div>
-		</md-card-title>
+		<div class="title-row">
+			<md-card-title>
+				<div class="card-title" [ngSwitch]="isNewJob()">
+					<p *ngSwitchCase="true">Create Job</p>
+					<p *ngSwitchCase="false">Edit Job</p>
+				</div>		
+			</md-card-title>		
+			<span flex></span>		
+			<a md-icon-button class="title-icon" *ngIf="!isNewJob()" (click)="formDelete()">
+				<md-icon>delete</md-icon>
+			</a>
+		</div>
 	</md-card-header>
 	<md-card-content>
 		<form novalidate [formGroup]="jobForm" (ngSubmit)="onSubmit()">
@@ -44,23 +50,33 @@
            		<button md-button *ngIf="loading">
 				  <md-spinner></md-spinner>
 				</button>
-				<a md-raised-button color="warn" *ngIf="!isNewJob()" (click)="formDelete()">Delete</a>
+				<!--
+				<a md-raised-button color="warn" *ngIf="!isNewJob()" (click)="formDelete()">Delete</a>-->
 
 				<a md-button (click)="formReset()">Cancel</a>
 				<a md-button type="submit" [disabled]="jobForm.invalid" (click)="onSubmit()">Save</a>
     		</div>			
 		</form>
 
-		
 	</md-card-content>
 </md-card>
 
 <md-card>
 	<md-card-content>
-		<div layout="row" style="display: flex;" layout-align="start center" class="pad-left-sm pad-right-sm">
+		<div>
 			<h2>Jobs</h2>
 		</div>
-		<md-divider></md-divider>
+		<div class="search-row" >
+			<md-icon class="search-icon" >search</md-icon>
+			<td-search-input  
+				class="search-box"
+				placeholder="Search jobs" 
+				[showUnderline]="true" 
+				[debounce]="500" 
+				(searchDebounce)="search($event)"
+				(clear)="searchInputTerm = ''">
+			</td-search-input>
+		</div>
 		<td-data-table
 		  [data]="filteredData"
 		  [columns]="columns"

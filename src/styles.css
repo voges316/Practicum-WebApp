@@ -7,7 +7,7 @@
 }
 
 /* Next 3 control content, toolbar, and scrollable region
-   to make a stick toolbar */
+   to make a sticky toolbar */
 div[layout=column][class=md-content] {
 	display: flex;
 	flex-direction: column;
@@ -22,4 +22,30 @@ md-toolbar[layout=column][class=md-content] {
 div[class=md-content][flex] {
 	flex: 1 1 auto;
 	overflow-y: auto;
+}
+
+/* Styles the icon/search box row */
+.search-row {
+	display: flex; 
+	flex-direction: row;
+}
+
+.search-icon {
+	margin: 10px;
+}
+
+.search-box {
+	flex: 1 100%;
+}
+
+/* Next two control width of searchbox
+   Have to style the auto-generated components */
+div.td-search-input {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+} 
+
+td-search-input > div > md-input-container {
+	width: 100%;
 }
