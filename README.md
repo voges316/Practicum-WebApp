@@ -1,5 +1,7 @@
 # MaterialApp
 
+SPA for interacting with Practicum API. Create/modify/delete employees & jobs, and assign them to one another.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.32.3.
 
 ## Development server
