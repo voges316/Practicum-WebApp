@@ -24,7 +24,7 @@ import { Job } from '../job-data/job.model';
 import { JobService } from '../job-data/job.service';
 import { ChangeDetectorRef } from '@angular/core';
 
-// Complete hack taken from 
+// Taken from 
 // https://github.com/Teradata/covalent/blob/develop/src/app/components/components/data-table/data-table.component.ts
 const NUMBER_FORMAT: (v: any) => any = (v: number) => v;
 const DECIMAL_FORMAT: (v: any) => any = (v: number) => v.toFixed(2);
@@ -84,8 +84,6 @@ export class JobDataComponent implements OnInit {
     this.snackBar.open('Success', 'Dismiss', {
      	duration: 3000,
     });
-
-    // this.snackBar.open('Created New Employee', 'Dismiss');
   }
 
   errorSnackBar() {
@@ -217,7 +215,6 @@ export class JobDataComponent implements OnInit {
   data: any[] = [];
 
   columns: ITdDataTableColumn[] = [
-    //{ name: 'id', label: 'ID #', numeric: true, format: NUMBER_FORMAT },
     { name: 'id', label: 'ID #' },
     { name: 'name', label: 'Job' },
     { name: 'description', label: 'Description' },
@@ -297,6 +294,5 @@ export class JobDataComponent implements OnInit {
     } else {
       this.columns.forEach((c: any) => c.tooltip = `This is ${c.label}!`);
     }
-  }  
-
+  } 
 }

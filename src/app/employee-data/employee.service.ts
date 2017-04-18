@@ -1,29 +1,42 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Employee } from './employee.model';
+import { Location } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 
-//const EMPLOYEES : Employee[] = 
-//	[{"id":3002,"firstName":"Homer","midName":null,"lastName":"Simpson","email":"homer@duff.com","phone":"12345"},{"id":3251,"firstName":"Frodo","midName":null,"lastName":"Baggins","email":"frodo@shire.com","phone":"12345"},{"id":151,"firstName":"Lisa","midName":"Samsonite","lastName":"Simpson","email":"lisa@harvard.edu","phone":"2524155"}];
-
-const BASE_URL: string = 'http://localhost:8080/Airlink-Web/api/employees';
-
 @Injectable()
 export class EmployeeService{
+  BASE_URL:string;
+  LOCAL_URL:string = 'http://localhost:8080/Airlink-Web';
+  PATH:string = '/api/employees'
 
-	constructor(private http : Http) {}
+	constructor(
+    private http : Http,
+    @Inject('locationObject') private locationObject: Location
+  ) {  
+    // Generate api url based on dev vs deployed environment
+    if (environment.production) {
+      /* /Airlink-Web/ -> /Airlink-Web */
+      let pathName = location.pathname.substring(0, location.pathname.length - 1);
+      this.BASE_URL = location.origin + pathName + this.PATH;
+    } else {
+      this.BASE_URL = this.LOCAL_URL + this.PATH;
+    }
+  }
 
 	svcTest() : void {
 		console.log('This is a test from employee service');
+    console.log('location: ' + location.origin);
 	}
 
   createEmp(employee: Employee): Promise<Employee> {
     let body = JSON.stringify(employee);
 
     return this.http
-      .post(`${BASE_URL}`, body, {headers: this.getHeaders()})
+      .post(`${this.BASE_URL}`, body, {headers: this.getHeaders()})
       .toPromise()
       .then(response => {
         // console.log("Raw json: ", response.json());
@@ -37,7 +50,7 @@ export class EmployeeService{
     let body = JSON.stringify(employee);
 
     return this.http
-      .post(`${BASE_URL}/${id}`, body, {headers: this.getHeaders()})
+      .post(`${this.BASE_URL}/${id}`, body, {headers: this.getHeaders()})
       .toPromise()
       .then(response => {
         // console.log("Raw json: ", response.json());
@@ -50,7 +63,7 @@ export class EmployeeService{
   deleteEmp(employee: Employee): Promise<Employee> {
     let id: string = employee.id;
     return this.http
-      .delete(`${BASE_URL}/${id}`, {headers: this.getHeaders()})
+      .delete(`${this.BASE_URL}/${id}`, {headers: this.getHeaders()})
       .toPromise()
       .then(response => {
         // console.log("Raw json: ", response.json());
@@ -61,7 +74,7 @@ export class EmployeeService{
 
 	getAll() : Promise<Employee[]> {
 		return this.http
-			.get(`${BASE_URL}/`, {headers: this.getHeaders()})
+			.get(`${this.BASE_URL}/`, {headers: this.getHeaders()})
 			.toPromise()
 			.then(response => {
         //console.log("Raw json: ", response.json());

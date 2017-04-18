@@ -207,7 +207,8 @@ export class EmployeeDataComponent implements OnInit {
   }
 
   test() {
-    console.log(this.selectedRows);
+    this.employeeSvc.svcTest();
+    //console.log(this.selectedRows);
   }
 
   private handlePromiseError (error: Response | any) {

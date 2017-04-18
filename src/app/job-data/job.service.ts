@@ -1,19 +1,31 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Job } from './job.model';
+import { Location } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 
-//const JOBS : Job[] = 
-//	[{"id":3152,"name":"Scheduling","description":null,"numberNeeded":4,"employees":[]},{"id":3153,"name":"Staff","description":null,"numberNeeded":2,"employees":[]},{"id":3151,"name":"Training","description":"The training army","numberNeeded":17,"employees":[]}];
-
-const BASE_URL: string = 'http://localhost:8080/Airlink-Web/api/jobs';
-
 @Injectable()
 export class JobService{
+  BASE_URL:string;
+  LOCAL_URL:string = 'http://localhost:8080/Airlink-Web';
+  PATH:string = '/api/jobs'
 
-	constructor(private http : Http) {}
+	constructor(
+    private http : Http,
+    @Inject('locationObject') private locationObject: Location
+  ) {
+    // Generate api url based on dev vs deployed environment
+    if (environment.production) {
+      /* /Airlink-Web/ -> /Airlink-Web */
+      let pathName = location.pathname.substring(0, location.pathname.length - 1);
+      this.BASE_URL = location.origin + pathName + this.PATH;
+    } else {
+      this.BASE_URL = this.LOCAL_URL + this.PATH;
+    }
+  }
 
 	svcTest() : void {
 		console.log('This is a test from job service');
@@ -23,7 +35,7 @@ export class JobService{
     let body = JSON.stringify(job);
 
     return this.http
-      .post(`${BASE_URL}`, body, {headers: this.getHeaders()})
+      .post(`${this.BASE_URL}`, body, {headers: this.getHeaders()})
       .toPromise()
       .then(response => {
         // console.log("Raw json: ", response.json());
@@ -37,7 +49,7 @@ export class JobService{
     let body = JSON.stringify(job);
 
     return this.http
-      .post(`${BASE_URL}/${id}`, body, {headers: this.getHeaders()})
+      .post(`${this.BASE_URL}/${id}`, body, {headers: this.getHeaders()})
       .toPromise()
       .then(response => {
         // console.log("Raw json: ", response.json());
@@ -50,7 +62,7 @@ export class JobService{
   deleteJob(job: Job): Promise<Job> {
     let id: string = job.id;
     return this.http
-      .delete(`${BASE_URL}/${id}`, {headers: this.getHeaders()})
+      .delete(`${this.BASE_URL}/${id}`, {headers: this.getHeaders()})
       .toPromise()
       .then(response => {
         // console.log("Raw json: ", response.json());
@@ -61,7 +73,7 @@ export class JobService{
 
 	getAll() : Promise<Job[]> {
 		return this.http
-			.get(`${BASE_URL}/`, {headers: this.getHeaders()})
+			.get(`${this.BASE_URL}/`, {headers: this.getHeaders()})
 			.toPromise()
 			.then(response => {
         //console.log("Raw json: ", response.json());

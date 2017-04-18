@@ -4,7 +4,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { Location, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -19,7 +19,6 @@ import { AppComponent } from './app.component';
 import { EmployeeDataComponent } from './employee-data/employee-data.component';
 import { DemoComponent } from './demo-component/demo-component.component';
 import { HomeComponent } from './home/home.component';
-
 import { JobDataComponent } from './job-data/job-data.component';
 
 /*
@@ -28,8 +27,11 @@ import { JobDataComponent } from './job-data/job-data.component';
 import { EmployeeService } from './employee-data/employee.service';
 import { JobService } from './job-data/job.service'; 
 
+/*
+ * Routes
+ */
 const routes: Routes = [
-  { path: '', redirectTo: 'jobs', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'employees', component: EmployeeDataComponent },
   { path: 'jobs', component: JobDataComponent },
@@ -56,7 +58,8 @@ const routes: Routes = [
   providers: [
     EmployeeService,
     JobService,
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: 'locationObject', useValue: location}
   ]
 })
 export class AppModule { }
